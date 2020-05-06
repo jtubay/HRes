@@ -94,5 +94,38 @@ const clearTable = () => {
 }
 $('#clear').on('click', clearTable)
 
+$(".submit").on("click", (e) => {
+    e.preventDefault();
+
+    const newReservation = {
+        customerName: $("#reserve-name").val().trim(),
+        phoneNumber: $("#reserve-phone").val().trim(),
+        customerEmail: $("#reserve-email").val().trim(),
+        customerID: $("#reserve-unique-id").val().trim()
+    }
+    console.log(newReservation)
+    $.ajax({
+        url: '/api/tables',
+        method: 'POST',
+        data : newReservation
+    }).then(data => {
+        if (data) {
+            alert("Yay! You are officially booked!");
+          }
+  
+          // If a table is available... tell user they on the waiting list.
+          else {
+            alert("Sorry you are on the wait list");
+          }
+  
+          // Clear the form when submitting
+          $("#reserve-name").val("");
+          $("#reserve-phone").val("");
+          $("#reserve-email").val("");
+          $("#reserve-unique-id").val("");
+  
+    })
+})
+
 runTableQuery();
 runWaitListQuery();
