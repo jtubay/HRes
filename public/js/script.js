@@ -85,6 +85,14 @@ const runWaitListQuery = () => {
 
     })
 }
+const clearTable = () => {
+    $.ajax({ url: '/api/clear', method: 'POST' })
+        .then(() => {
+            $("#waitList").empty();
+            $("#tableList").empty();
+        })
+}
+$('#clear').on('click', clearTable)
 
 runTableQuery();
 runWaitListQuery();
